@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, {useEffect} from "react";
+
+import {useSelector,useDispatch} from "react-redux";
+import {fetchTodos} from "./redux";
+
+export default function App(){
+  const state=useSelector((state)=>state)
+  const{todos}=state;
+ 
+ 
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+    dispatch(fetchTodos());
+  },[])
+  
+return(
+  <>
+         
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">userId</th>
+      <th scope="col">id</th>
+      <th scope="col">title</th>
+      <th scope="col">completed</th>
+    </tr>
+  </thead>
+  <tbody>
+   {
+     state.map(todo=>{console.log(todo.completed)
+       return(
+        <tr>
+        <th scope="row">{todo.userId}</th>
+        <td>{todo.id}</td>
+        <td>{todo.title}</td>
+        <td>{(todo.completed)? "true": "false"}</td>
+      </tr>
+       )
+     })
+   }
+   
+   
+  </tbody>
+</table>
+    </>
+
+)
 }
-
-export default App;
